@@ -1,12 +1,14 @@
 <template>
     <h1 class="text-h5 font-weight-medium">Quase lá!</h1>
     <h2 class="text-body-1">
-        Informe os dados para finalizar o cadastro (CPF ou CNPJ do recebimento dos imóveis)
+        Informe os dados para finalizar o cadastro
     </h2>
     <form class="mt-4" @submit.prevent="handleSubmit">
         <Stack class="flex-column ga-3">
             <v-text-field hide-details="auto" variant="outlined" label="CPF/CNPJ" v-model="form.cpfCnpj" required
                 @update:modelValue="onChangeCpfCnpj" />
+            <v-text-field hide-details="auto" variant="outlined" label="Nome completo" v-model="form.fullName"
+                required />
             <v-expand-transition>
                 <v-text-field v-if="isPessoaJuridica" hide-details="auto" variant="outlined" label="Razão Social"
                     v-model="form.companyName" required />
@@ -28,6 +30,7 @@ import masks from '~/shared/utils/masks'
 const form = reactive({
     cpfCnpj: '',
     companyName: '',
+    fullName: '',
 })
 
 const isPessoaJuridica = computed(() => {
