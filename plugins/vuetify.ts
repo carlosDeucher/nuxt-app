@@ -18,6 +18,14 @@ export default defineNuxtPlugin((app) => {
                 },
             },
         },
+        display: {
+            mobileBreakpoint: 'sm',
+        },
+        defaults: {
+            VCard: {
+                elevation: 2
+            },
+        },
     })
     app.vueApp.use(vuetify)
 })
