@@ -3,11 +3,12 @@ import { useTheme } from 'vuetify/lib/composables/theme.mjs';
 
 const props = defineProps<{
     href: string;
+    color?: string;
 }>()
 
 const theme = useTheme();
 
-const secondaryColor = theme.current.value.colors.secondary;
+const color = theme.current.value.colors[props.color || "secondary"];
 
 </script>
 
@@ -19,7 +20,7 @@ a:hover {
 
 
 <template>
-    <a class="text-decoration-none font-weight-bold" :href="props.href" :style="{ color: secondaryColor }">
+    <a class="text-decoration-none font-weight-bold" :href="props.href" :style="{ color: color }">
         <slot></slot>
     </a>
 </template>
