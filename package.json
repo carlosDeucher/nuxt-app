@@ -13,6 +13,7 @@
     "@mdi/font": "^7.4.47",
     "@nuxt/fonts": "^0.11.1",
     "add": "^2.0.6",
+    "axios": "^1.8.4",
     "eslint": "^9.24.0",
     "module": "^1.2.5",
     "npx": "^10.2.2",
@@ -22,6 +23,7 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@types/node": "^22.14.0",
     "vite-plugin-vuetify": "^2.1.1",
     "vuetify": "^3.8.0"
   }
