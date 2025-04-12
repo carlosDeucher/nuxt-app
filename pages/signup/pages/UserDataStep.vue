@@ -13,7 +13,8 @@
                 <v-text-field v-if="isPessoaJuridica" hide-details="auto" variant="outlined" label="Razão Social"
                     v-model="form.companyName" required />
             </v-expand-transition>
-            <v-btn type="submit" size="large" color="primary" variant="flat" class="text-none">Finalizar Cadastro
+            <v-btn :loading="isLoading" type="submit" size="large" color="primary" variant="flat"
+                class="text-none">Finalizar Cadastro
             </v-btn>
             <Stack class="justify-center">
                 <span class="text-body-2">
@@ -26,6 +27,9 @@
 
 <script setup lang="ts">
 import masks from '~/shared/utils/masks'
+import type { createCompanyParams } from '../index.vue';
+
+const isLoading = ref(false)
 
 const form = reactive({
     cpfCnpj: '',
@@ -39,9 +43,20 @@ const isPessoaJuridica = computed(() => {
     return parsedValue.length === 14
 })
 
-const handleSubmit = () => {
-    console.log('Form submitted:', form)
-    // You can send this to an API using useFetch or $fetch
+const { createCompany } = defineProps<{
+    createCompany: (params: createCompanyParams) => Promise<void>
+}>()
+
+const handleSubmit = async () => {
+    isLoading.value = true
+
+    await createCompany({
+        cpfCnpj: form.cpfCnpj,
+        companyName: form.companyName,
+        fullName: form.fullName
+    })
+
+    isLoading.value = false
 }
 
 const onChangeCpfCnpj = (value: string) => {
