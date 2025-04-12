@@ -1,34 +1,27 @@
 <template>
     <v-container max-width="900px">
-        <Stack class="ga-10 align-center mt-md-16">
-            <main class="mt-4">
-                <AuthStep v-if="currentStep === 'auth'"></AuthStep>
-                <UserDataStep v-else-if="currentStep === 'userData'"></UserDataStep>
-                <SuccessStep v-else-if="currentStep === 'success'"></SuccessStep>
-            </main>
-            <Box v-if="!isMobile" class="rounded-xl" sx="overflow: hidden">
-                <v-img src="/signup-hero.webp" :width="500" :height="500" position="right" cover alt="Logo">
-                </v-img>
-            </Box>
-        </Stack>
+        <Box class="mt-md-16">
+            <!-- ETAPAS COM FORMULÁRIO -->
+            <Stack v-if="currentStep !== 'success'" class="ga-10 align-center justify-center mt-4">
+                <Box>
+                    <AuthStep v-if="currentStep === 'auth'" @save-auth-data="saveAuthData"></AuthStep>
+                    <UserDataStep v-else-if="currentStep === 'userData'" :createCompany="createCompany">
+                    </UserDataStep>
+                </Box>
+                <Box v-if="!isMobile" class="rounded-xl" sx="overflow: hidden">
+                    <v-img src="/signup-hero.webp" :width="500" :height="500" position="right" cover alt="Logo">
+                    </v-img>
+                </Box>
+            </Stack>
+
+            <!-- ETAPA DE SUCESSO -->
+            <SuccessStep v-if="currentStep === 'success'"></SuccessStep>
+        </Box>
     </v-container>
+    <v-snackbar :color="snackbarOptions.color" v-model="snackbarOptions.isActive" :timeout="2000">
+        {{ snackbarOptions.text }}
+    </v-snackbar>
 </template>
-
-<script setup lang="ts">
-import { useDisplay } from 'vuetify'
-import { ref, watch } from 'vue';
-import AuthStep from './pages/AuthStep.vue';
-import UserDataStep from './pages/UserDataStep.vue';
-import SuccessStep from './pages/SuccessStep.vue';
-const { smAndDown } = useDisplay();
-const isMobile = ref(true);
-
-watch(smAndDown, (val) => {
-    isMobile.value = val;
-}, { immediate: true });
-
-const currentStep = ref("userData");
-</script>
 
 <!--Essa tag style foi uma gambiarra pois ainda não encontrei uma maneira
 de trazer responsividade pra propriedade max-width sem ter problemas com o SSR-->
@@ -42,3 +35,71 @@ main {
     }
 }
 </style>
+
+<script setup lang="ts">
+import { useDisplay } from 'vuetify'
+import { ref, watch } from 'vue';
+import AuthStep from './pages/AuthStep.vue';
+import UserDataStep from './pages/UserDataStep.vue';
+import SuccessStep from './pages/SuccessStep.vue';
+import clientAPI from '~/shared/lib/AxiosConfig';
+
+const currentStep = ref("auth");
+const snackbarOptions = ref({
+    isActive: false,
+    text: '',
+    color: ''
+});
+
+const authData = ref({
+    email: '',
+    password: '',
+})
+
+export type saveAuthDataParams = {
+    email: string;
+    password: string;
+}
+const saveAuthData = ({ email, password }: saveAuthDataParams) => {
+    authData.value = {
+        email, password
+    }
+
+    currentStep.value = 'userData';
+}
+
+export type createCompanyParams = {
+    fullName?: string;
+    companyName?: string;
+    cpfCnpj: string;
+}
+
+const createCompany = async (params: createCompanyParams) => {
+    console.log('Form submitted:', params)
+
+    const { email, password } = authData.value
+    const { fullName, companyName, cpfCnpj } = params
+
+    try {
+        await clientAPI.post("/company", {
+            email,
+            password,
+            fullName,
+            companyName,
+            cpfCnpj,
+        })
+    } catch {
+        snackbarOptions.value = {
+            isActive: true,
+            text: 'Falha ao criar conta, tente novamente mais tarde.',
+            color: 'error',
+        }
+    }
+}
+const { smAndDown } = useDisplay();
+const isMobile = ref(true);
+
+watch(smAndDown, (val) => {
+    isMobile.value = val;
+}, { immediate: true });
+</script>
