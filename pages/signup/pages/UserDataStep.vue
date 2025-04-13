@@ -1,7 +1,7 @@
 <template>
-    <h1 class="text-h5 font-weight-medium">Quase lá!</h1>
-    <h2 class="text-body-1">
-        Informe os dados para finalizar o cadastro
+    <h1 class="text-h3">Quase lá!</h1>
+    <h2 class="text-body-1 mt-1">
+        Informe os dados para finalizar o cadastro.
     </h2>
     <form class="mt-4" @submit.prevent="handleSubmit">
         <Stack class="flex-column ga-3">

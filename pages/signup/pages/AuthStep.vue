@@ -1,6 +1,6 @@
 <template>
-    <h1 class="text-h5 font-weight-medium">Primeiros passos</h1>
-    <h2 class="text-body-1">
+    <h1 class="text-h3">Primeiros passos</h1>
+    <h2 class="text-body-1 mt-1">
         Faça o seu cadastro e comece agora com a Imobia
     </h2>
     <form class="mt-4" @submit.prevent="handleSubmit">
