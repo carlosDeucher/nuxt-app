@@ -7,7 +7,7 @@
                 <v-container max-width="1200">
                     <div class="pr-2 pl-2">
                         <Stack sx="height: 50px; width: fit-content">
-                            <v-img src="/minimal-logo.jpeg" :width="50" :height="50" alt="Logo">
+                            <v-img src="/minimal-logo.png" :width="50" :height="50" alt="Logo">
                             </v-img>
                         </Stack>
                     </div>
