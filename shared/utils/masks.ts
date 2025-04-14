@@ -2,7 +2,7 @@ export default {
     cpfCnpj: (v: string): string => {
         const valorOriginal = v;
         v = v.replace(/\D/g, ""); // remove tudo q nao é digito
-        
+
         if (v.length >= 15) return valorOriginal.slice(0, -1);
         if (v.length <= 14) {
             // CPF
@@ -33,5 +33,15 @@ export default {
         }
 
         return v;
+    },
+    number: (v: string) => {
+        return (v = v.replace(/[^\d.-]/g, ""));
+    },
+    date: (v: string) => {
+        return v
+            .replace(/\D/g, "")
+            .replace(/(\d{2})(\d)/, "$1/$2")
+            .replace(/(\d{2})(\d)/, "$1/$2")
+            .replace(/(\d{4})(\d)/, "$1");
     },
 }

@@ -15,7 +15,7 @@
             </Stack>
 
             <!-- ETAPA DE SUCESSO -->
-            <SuccessStep v-if="currentStep === 'success'"></SuccessStep>
+            <SuccessStep v-if="currentStep === 'success'" :createdCompanyId="createdCompanyId"></SuccessStep>
         </Box>
     </v-container>
     <v-snackbar :color="snackbarOptions.color" v-model="snackbarOptions.isActive" :timeout="2000">
@@ -43,8 +43,12 @@ import AuthStep from './pages/AuthStep.vue';
 import UserDataStep from './pages/UserDataStep.vue';
 import SuccessStep from './pages/SuccessStep.vue';
 import clientAPI from '~/shared/lib/AxiosConfig';
+import type { ISaveAuthDataParams } from '~/@types/ISaveAuthDataParams';
+import type { ICreateCompanyParams } from '~/@types/ICreateCompanyParams';
 
 const currentStep = ref("auth");
+const createdCompanyId = ref(null);
+
 const snackbarOptions = ref({
     isActive: false,
     text: '',
@@ -56,11 +60,7 @@ const authData = ref({
     password: '',
 })
 
-export type saveAuthDataParams = {
-    email: string;
-    password: string;
-}
-const saveAuthData = ({ email, password }: saveAuthDataParams) => {
+const saveAuthData = ({ email, password }: ISaveAuthDataParams) => {
     authData.value = {
         email, password
     }
@@ -68,26 +68,26 @@ const saveAuthData = ({ email, password }: saveAuthDataParams) => {
     currentStep.value = 'userData';
 }
 
-export type createCompanyParams = {
-    fullName?: string;
-    companyName?: string;
-    cpfCnpj: string;
-}
-
-const createCompany = async (params: createCompanyParams) => {
+const createCompany = async (params: ICreateCompanyParams) => {
     console.log('Form submitted:', params)
 
     const { email, password } = authData.value
     const { fullName, companyName, cpfCnpj } = params
 
+    const cpfCnpjParsed = cpfCnpj.replace(/\D/g, "");
+
     try {
-        await clientAPI.post("/company", {
+        const { data } = await clientAPI.post("/customer", {
             email,
             password,
             fullName,
             companyName,
-            cpfCnpj,
+            cpfCnpj: cpfCnpjParsed,
         })
+
+        createdCompanyId.value = data.data.id
+
+        currentStep.value = 'success';
     } catch {
         snackbarOptions.value = {
             isActive: true,

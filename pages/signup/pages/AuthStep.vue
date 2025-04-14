@@ -7,10 +7,14 @@
         <Stack class="flex-column ga-3">
             <v-text-field hide-details="auto" variant="outlined" label="E-mail" v-model="form.email" required
                 type="email" />
-            <v-text-field type="password" :error-messages="formErrors.password || undefined" hide-details="auto"
-                variant="outlined" label="Senha" v-model="form.password" required />
-            <v-text-field type="password" :error-messages="formErrors.confirmPassword || undefined" hide-details="auto"
-                variant="outlined" label="Confirme sua senha" v-model="form.confirmPassword" required />
+            <v-text-field :error-messages="formErrors.password || undefined" hide-details="auto" variant="outlined"
+                label="Senha" :append-inner-icon="isVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="isVisible ? 'text' : 'password'" @click:append-inner="isVisible = !isVisible"
+                v-model="form.password" required />
+            <v-text-field :error-messages="formErrors.confirmPassword || undefined" hide-details="auto"
+                variant="outlined" label="Confirme sua senha" :type="isVisible ? 'text' : 'password'"
+                @click:append-inner="isVisible = !isVisible" :append-inner-icon="isVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                v-model="form.confirmPassword" required />
             <v-btn type="submit" size="large" color="primary" variant="flat" class="text-none">Enviar
             </v-btn>
             <Stack class="justify-center">
@@ -23,7 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import type { saveAuthDataParams } from '../index.vue';
+import type { ISaveAuthDataParams } from '~/@types/ISaveAuthDataParams';
+const isVisible = ref(false)
 const form = reactive({
     email: '',
     password: '',
@@ -37,7 +42,7 @@ const formErrors = reactive({
 })
 
 const emit = defineEmits<{
-    "save-auth-data": [saveAuthDataParams]
+    "save-auth-data": [ISaveAuthDataParams]
 }>();
 
 const handleSubmit = () => {

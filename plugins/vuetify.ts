@@ -11,7 +11,7 @@ const lightTheme: ThemeDefinition = {
         primary: "#E94E24", // #E94E24
         secondary: "#1E3260", // #1E3260
         "secondary-light": "#445377", // #445377,
-        "secondary-dark": "#142650", // #142650
+        "secondary-dark": "#142650", // #1f2f51
         gray: "#9e9e9e", // #9e9e9e
     },
      

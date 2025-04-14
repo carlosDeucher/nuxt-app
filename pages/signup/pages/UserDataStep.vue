@@ -26,8 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import type { ICreateCompanyParams } from '~/@types/ICreateCompanyParams';
 import masks from '~/shared/utils/masks'
-import type { createCompanyParams } from '../index.vue';
 
 const isLoading = ref(false)
 
@@ -44,7 +44,7 @@ const isPessoaJuridica = computed(() => {
 })
 
 const { createCompany } = defineProps<{
-    createCompany: (params: createCompanyParams) => Promise<void>
+    createCompany: (params: ICreateCompanyParams) => Promise<void>
 }>()
 
 const handleSubmit = async () => {

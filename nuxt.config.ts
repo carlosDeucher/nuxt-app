@@ -10,6 +10,11 @@ export default defineNuxtConfig({
       '/**': { isr: true }
     }
   },
+  runtimeConfig: {
+    public: {
+      apiUrl: 'http://localhost:6060'
+    }
+  },
   css: ['@/assets/main.css'],
 
   // Vuetify configuration

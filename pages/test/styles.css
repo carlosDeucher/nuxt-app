@@ -1,0 +1,25 @@
+html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: black;
+    padding: 0;
+    color:white; 
+  }
+
+.color-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.disabledButton {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.activeButton {
+    cursor: pointer;
+}

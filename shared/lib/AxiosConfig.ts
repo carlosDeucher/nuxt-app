@@ -1,5 +1,6 @@
 import axios from 'axios';
 const clientAPI = axios.create({
+    // TODO - Buscar valor do .env
     baseURL: "http://localhost:6060",
     withCredentials: false,
     headers: {

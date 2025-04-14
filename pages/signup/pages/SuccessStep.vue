@@ -3,6 +3,9 @@ import { useDisplay } from 'vuetify'
 
 const { mobile } = useDisplay()
 
+const { createdCompanyId } = defineProps<{
+    createdCompanyId: string | null
+}>()
 </script>
 
 <template>
@@ -21,10 +24,12 @@ const { mobile } = useDisplay()
             </p>
 
             <Stack class="flex-column ga-3 align-center mt-6">
-                <v-btn size="large" class="text-none" variant="flat" color="primary" href="">Criar conta ASAAS</v-btn>
-                <BaseLink class="text-center" href="/">Explorar sistema agora mesmo</BaseLink>
+                <v-btn size="large" class="text-none" variant="flat" color="primary" tag="a"
+                    :href="`/${createdCompanyId}/asaas-signup`">Criar
+                    conta ASAAS</v-btn>
+                <BaseLink class="text-center" :href="`/${createdCompanyId}/home`">Explorar sistema agora mesmo
+                </BaseLink>
             </Stack>
-
         </v-card>
     </v-container>
 </template>
