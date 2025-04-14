@@ -51,3 +51,5 @@ yarn preview
 # bun
 bun run preview
 ```
+
+Comece por http://localhost:3000/signup
