@@ -1,10 +1,8 @@
-# Nuxt Minimal Starter
-
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Manual de execução do projeto
 
 ## Setup
 
-Make sure to install dependencies:
+Instale todas as dependências:
 
 ```bash
 # npm
@@ -20,27 +18,9 @@ yarn install
 bun install
 ```
 
-## Development Server
+## Build
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
+Build a aplicaçãp:
 
 ```bash
 # npm
@@ -56,7 +36,7 @@ yarn build
 bun run build
 ```
 
-Locally preview production build:
+Execute a build:
 
 ```bash
 # npm
@@ -71,5 +51,3 @@ yarn preview
 # bun
 bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
